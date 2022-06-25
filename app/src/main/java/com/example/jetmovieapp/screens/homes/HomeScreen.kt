@@ -1,4 +1,4 @@
-package com.example.jetmovieapp.screens.home
+package com.example.jetmovieapp.screens.homes
 
 import android.util.Log
 import androidx.compose.foundation.layout.Column
@@ -15,6 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.jetmovieapp.MovieRow
+import com.example.jetmovieapp.navigation.MovieNavigation
+import com.example.jetmovieapp.navigation.MovieScreens
 
 // this seems like our homeScreen activity with the navController as it's parameter
 // the reason why we are not passing inside the scaffold because it is already inside
@@ -40,6 +42,9 @@ fun HomeScreen(navController: NavController) {
         // here we can pass the main content
         // and inside the main content we gonna pass
         // nav controller as a parameter
+
+        // reason why we passed the nav controller inside this method
+        // is because we can move to some other screen through this method
         MainContent(navController = navController)
     }
 }
@@ -93,7 +98,8 @@ fun HomeScreen(navController: NavController) {
                         // we know movie row has a trailing lambda with movie parameter
                         MovieRow(it) { movieName ->
 
-                            Log.d("movie", "MainContent: $movieName")
+                            navController.navigate(
+                                route = MovieScreens.DetailsScreen.name)
 
                         }
 

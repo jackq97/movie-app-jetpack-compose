@@ -1,4 +1,4 @@
-package com.example.jetmovieapp.screens.home.details
+package com.example.jetmovieapp.screens.details
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
