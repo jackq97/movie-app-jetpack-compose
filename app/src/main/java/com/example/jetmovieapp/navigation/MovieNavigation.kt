@@ -43,9 +43,12 @@ fun MovieNavigation() {
         // accepts list of arguments and in it we can pass the name
         // and type of argument
 
-        composable(MovieScreens.DetailsScreen.name
+        // it is like in web development link (url) in the route
+        // at end we add the file we want to pass with + /{file}
+
+        composable(MovieScreens.DetailsScreen.name+ "/{movie}"
         , arguments = listOf(navArgument(name = "movie"){type = NavType.StringType})
-        ) {
+        ) {navBackStackEntry ->
 
             // so we are putting the data as an argument but how do we get
             // access to or retrieve the data, well we gonna get it from
@@ -54,7 +57,7 @@ fun MovieNavigation() {
             // parameter
 
                 DetailsScreen(navController = navController
-                ,
+                ,navBackStackEntry.arguments?.getString("movie")
                 )
         }
 

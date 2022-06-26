@@ -96,10 +96,13 @@ fun HomeScreen(navController: NavController) {
                         // all the available items and then add it to the card one by one
 
                         // we know movie row has a trailing lambda with movie parameter
-                        MovieRow(it) { movieName ->
+                        MovieRow(it) { movieSingleItem ->
+
+                            // now we gonna pass the single movie name in
+                            // our screen directory
 
                             navController.navigate(
-                                route = MovieScreens.DetailsScreen.name)
+                                route = MovieScreens.DetailsScreen.name+"/$movieSingleItem")
 
                         }
 
