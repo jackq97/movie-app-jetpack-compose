@@ -69,4 +69,8 @@ dependencies {
     // dependency for changing status bar color
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.17.0"
 
+
+    // coil is used for retrieving image from background it handles the multi threading by itself
+    implementation("io.coil-kt:coil-compose:2.1.0")
+
 }

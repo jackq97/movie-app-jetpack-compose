@@ -42,7 +42,10 @@ fun DetailsScreen(navController: NavController,
                 ) {
 
                     IconButton(modifier = Modifier.size(50.dp),
-                        onClick = { }) {
+                        onClick = {
+                            // on click we gonna move back
+                            navController.popBackStack()
+                        }) {
                         Icon(
                             Icons.Filled.ArrowBack,
                             "back button",
@@ -79,21 +82,6 @@ fun DetailsScreen(navController: NavController,
                         text = movieData.toString(),
                         style = MaterialTheme.typography.h6
                     )
-
-                    Button(onClick = {
-
-                        // going back to the activity we came from
-                        navController.popBackStack()
-
-                    }) {
-
-                        Text(
-                            text = "GO BACK",
-                            style = MaterialTheme.typography.button
-                        )
-
-                    }
-
                 }
 
             }

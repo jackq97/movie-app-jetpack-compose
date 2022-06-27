@@ -1,6 +1,5 @@
 package com.example.jetmovieapp.screens.homes
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,12 +10,15 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.jetmovieapp.MovieRow
-import com.example.jetmovieapp.navigation.MovieNavigation
+import androidx.navigation.compose.rememberNavController
+import com.example.jetmovieapp.model.Movie
+import com.example.jetmovieapp.model.getMovie
 import com.example.jetmovieapp.navigation.MovieScreens
+import com.example.jetmovieapp.widget.MovieRow
 
 // this seems like our homeScreen activity with the navController as it's parameter
 // the reason why we are not passing inside the scaffold because it is already inside
@@ -58,16 +60,10 @@ fun HomeScreen(navController: NavController) {
 
 @Composable
         fun MainContent(
-            navController: NavController,
-            movieList: List<String> = listOf(
-                "golmal",
-                "solmal",
-                "cholmal",
-                "kholmal",
-                "fuddu",
-                "bnda",
-                "sudhar ja"
-            )
+    // in here instead of hard coding the movie list we gonna pass the
+    // Movie object type in list, and set it equal to our get movie
+    navController: NavController,
+    movieList: List<Movie> = getMovie()
         ) {
 
             // needs to be inside column since list will be stacked vertically
@@ -103,7 +99,6 @@ fun HomeScreen(navController: NavController) {
 
                             navController.navigate(
                                 route = MovieScreens.DetailsScreen.name+"/$movieSingleItem")
-
                         }
 
                     }
@@ -111,5 +106,8 @@ fun HomeScreen(navController: NavController) {
             }
         }
 
-
-
+@Preview
+@Composable
+fun ShowPreview(){
+    HomeScreen(navController = rememberNavController())
+}

@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.jetmovieapp.model.Movie
 import com.example.jetmovieapp.navigation.MovieNavigation
 import com.example.jetmovieapp.ui.theme.JetMovieAppTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -52,71 +53,6 @@ fun MyApp(content: @Composable () -> Unit) {
         // we put inside the MyApp composable
         content()
     }
-}
-
-// now this function is kinda like layout list from recycler view
-// it has a card and we can pass our movie String as a parameter inside
-// this composable 
-
-// as we know there are two ways we can utilise onClick method
-// we can define it and pass our code directly into
-// or we can make a trailing function that the onClick method
-// will invoke
-
-@Preview
-@Composable
-fun MovieRow(movieName: String = "jassi",
- onItemClick: (String) -> Unit = {}  ) {
-    
-    Card(modifier = Modifier
-        .padding(12.dp)
-        .fillMaxWidth()
-        .height(130.dp)
-        .clickable {
-            // invoke our trailing lambda function here
-            // and pass the movie name in it
-            onItemClick(movieName)
-        },
-        elevation = 4.dp,
-        backgroundColor = MaterialTheme.colors.background
-    ) {
-
-        // now to add multiple elements inside our list
-        // and to also manage text's position in card
-        // we gonna use row for that
-
-        Row(
-            // remember jassi vertical alignment and horizontal arrangement
-        verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start
-        ) {
-
-            Surface(
-                shape = RectangleShape,
-                modifier = Modifier
-                    .padding(12.dp)
-                    .size(100.dp)
-            ) {
-                Icon(imageVector = Icons.Default
-                    .AccountBox,
-                    tint = Color.LightGray,
-                    contentDescription = "movie")
-            }
-
-            Text(
-
-                text = movieName,
-                style = TextStyle(
-                )
-
-            )
-
-        }
-
-
-
-    }
-    
 }
 
 // now we also transform this preview like we transformed our set content
