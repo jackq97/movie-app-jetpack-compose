@@ -3,18 +3,40 @@ package com.example.jetmovieapp.widget
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.modifier.modifierLocalOf
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role.Companion.Image
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
+import com.example.jetmovieapp.R
 import com.example.jetmovieapp.model.Movie
 import com.example.jetmovieapp.model.getMovie
 
@@ -41,7 +63,9 @@ fun MovieRow(movie: Movie = getMovie()[0],
     Card(modifier = Modifier
         .padding(12.dp)
         .fillMaxWidth()
-        .height(130.dp)
+        // height needs to be dynamic, since we are using
+        // expanded animation
+        //.height(130.dp)
         .clickable {
             // invoke our trailing lambda function here
             // and pass the id from the Movie object
@@ -64,18 +88,39 @@ fun MovieRow(movie: Movie = getMovie()[0],
         ) {
 
             Surface(
-                shape = RectangleShape,
+                shape = RoundedCornerShape(10.dp),
                 modifier = Modifier
                     .padding(12.dp)
                     .size(100.dp)
+
             ) {
-                
-                Image(painter = rememberAsyncImagePainter(model = movie.images[0]),
-                    contentDescription = "Movie Image")
+
+                Image(
+                    painter =   rememberAsyncImagePainter(movie.images.first()),
+                    contentDescription = "Movie Image",
+                    contentScale = ContentScale.Crop,
+                    )
                 
             }
             
-            Column() {
+            Column(
+                modifier = Modifier.padding(7.dp)
+            ) {
+
+//                Row(verticalAlignment = Alignment.CenterVertically) {
+//
+//
+//
+//                    Spacer(modifier = Modifier.width(80.dp))
+//
+//                  /*  Text(
+//                        modifier = Modifier.width(80.dp),
+//                        // now here we gonna show the title
+//                        text = "Rating: ${movie.rating}",
+//                        style = MaterialTheme.typography.caption
+//                    )*/
+//
+//                }
 
                 Text(
                     // now here we gonna show the title
@@ -94,6 +139,54 @@ fun MovieRow(movie: Movie = getMovie()[0],
                     text = movie.year,
                     style = MaterialTheme.typography.caption
                 )
+
+                // this is animated expand variable initially set to false
+
+                var isExpanded =
+
+                Row() {
+
+                    // this is annotated string text composable function
+                    // with the helps of this text field we can customise
+                    // each word with different style
+
+                    Text( buildAnnotatedString {
+
+                        withStyle(
+                            // span style means we are particularly changing
+                            // the style of string that we gonna append
+                            style = SpanStyle(
+                                color = Color.DarkGray,
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.ExtraBold
+
+                            )){
+                            // appending the string
+                            append("Plot: ")
+                        }
+
+                        withStyle(
+                            style = SpanStyle(
+                                color = Color.DarkGray,
+                                fontWeight = FontWeight.Light,
+                                fontSize = 12.sp
+                            )
+                        ){
+                            append(movie.plot)
+                        }
+                    }, modifier = Modifier.width(180.dp),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+
+                    Icon(
+                        modifier = Modifier.size(25.dp),
+                        imageVector = Icons.Filled.ArrowDropDown,
+                        contentDescription = "expand Plot"
+                    )
+
+                }
+
 
             }
 
