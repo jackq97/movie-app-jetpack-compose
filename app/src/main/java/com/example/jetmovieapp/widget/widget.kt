@@ -1,29 +1,19 @@
 package com.example.jetmovieapp.widget
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.modifier.modifierLocalConsumer
-import androidx.compose.ui.modifier.modifierLocalOf
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -32,11 +22,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
-import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
-import com.example.jetmovieapp.R
 import com.example.jetmovieapp.model.Movie
 import com.example.jetmovieapp.model.getMovie
 
@@ -59,6 +45,11 @@ import com.example.jetmovieapp.model.getMovie
 
 fun MovieRow(movie: Movie = getMovie()[0],
              onItemClick: (String) -> Unit = {}  ) {
+
+    // some constant values for our plot max and min lines
+    // it will helps us expand the text
+
+    val minimizedMaxLines = 1
 
     Card(modifier = Modifier
         .padding(12.dp)
@@ -107,6 +98,8 @@ fun MovieRow(movie: Movie = getMovie()[0],
                 modifier = Modifier.padding(7.dp)
             ) {
 
+                var isExpanded by remember { mutableStateOf(false) }
+
 //                Row(verticalAlignment = Alignment.CenterVertically) {
 //
 //
@@ -140,11 +133,7 @@ fun MovieRow(movie: Movie = getMovie()[0],
                     style = MaterialTheme.typography.caption
                 )
 
-                // this is animated expand variable initially set to false
-
-                var isExpanded =
-
-                Row() {
+                Row {
 
                     // this is annotated string text composable function
                     // with the helps of this text field we can customise
@@ -175,27 +164,33 @@ fun MovieRow(movie: Movie = getMovie()[0],
                             append(movie.plot)
                         }
                     }, modifier = Modifier.width(180.dp),
-                        maxLines = 1,
+                        maxLines = if (isExpanded) Int.MAX_VALUE else minimizedMaxLines,
                         overflow = TextOverflow.Ellipsis
                     )
 
                     Icon(
-                        modifier = Modifier.size(25.dp),
-                        imageVector = Icons.Filled.ArrowDropDown,
+                        modifier = Modifier
+                            .size(25.dp)
+                            .clickable { isExpanded = !isExpanded },
+                        imageVector = if (isExpanded) Icons.Filled.KeyboardArrowUp
+                        else Icons.Filled.KeyboardArrowDown,
                         contentDescription = "expand Plot"
                     )
-
                 }
 
+                AnimatedVisibility(visible = isExpanded) {
 
+                    Divider()
+
+                    Column(modifier = Modifier.width(180.dp)) {
+
+                        Text(text = "Actors : ${movie.actors}",
+                            style = MaterialTheme.typography.subtitle1
+                        )
+
+                    }
+                }
             }
-
-
-
         }
-
-
-
     }
-
 }

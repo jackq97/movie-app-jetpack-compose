@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.jetmovieapp.MyApp
+import com.example.jetmovieapp.model.getMovie
 import com.example.jetmovieapp.navigation.MovieNavigation
 
 // here we gonna add details screen for our app
@@ -81,6 +82,17 @@ fun DetailsScreen(navController: NavController,
                     Text(
                         text = movieData.toString(),
                         style = MaterialTheme.typography.h6
+                    )
+
+                    val movieDetails = getMovie()
+
+
+                   val movieInfoFromId = movieDetails.single { item ->
+                       item.id == movieData
+                   }
+
+                    Text(text = movieInfoFromId.title,
+                        style = MaterialTheme.typography.h3
                     )
                 }
 
