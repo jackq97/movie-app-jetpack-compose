@@ -1,20 +1,24 @@
 package com.example.jetmovieapp.screens.homes
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.jetmovieapp.R
 import com.example.jetmovieapp.model.Movie
 import com.example.jetmovieapp.model.getMovie
 import com.example.jetmovieapp.navigation.MovieScreens
@@ -31,11 +35,13 @@ fun HomeScreen(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                backgroundColor = Color.LightGray
+                backgroundColor = colorResource(R.color.nordic_dark),
+                elevation = 0.dp
             ) {
                 Text(
                     modifier = Modifier.padding(start = 10.dp),
                     text = "Movies",
+                    color = colorResource(id = R.color.white),
                     fontSize = 22.sp
                 )
             }
@@ -66,15 +72,20 @@ fun HomeScreen(navController: NavController) {
     movieList: List<Movie> = getMovie()
         ) {
 
+
+    Surface(modifier = Modifier.fillMaxSize(),
+        color = colorResource(id = R.color.nordic_dark)) {
+
+
+        Surface(modifier = Modifier.fillMaxSize(),
+            color = colorResource(R.color.nordic_less_dark),
+            shape = RoundedCornerShape(topStart = 15.dp,
+            topEnd = 15.dp)
+        ) {
+
             // needs to be inside column since list will be stacked vertically
 
-            Column(
-                modifier = Modifier.padding(
-                    start = 12.dp,
-                    end = 12.dp,
-                    bottom = 12.dp
-                )
-            ) {
+            Column {
 
                 // lazy column demo
                 // first starting with lazy column compose function
@@ -104,6 +115,13 @@ fun HomeScreen(navController: NavController) {
                     }
                 }
             }
+
+        }
+    }
+
+
+
+
         }
 
 @Preview

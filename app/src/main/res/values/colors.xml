@@ -7,4 +7,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="nordic_dark">#FF2E3440</color>
+    <color name="nordic_less_dark">#FF3B4252</color>
+    <color name="nordic_little_dark">#FF434C5E</color>
+    <color name="nordic_least_dark">#FF4C566A</color>
+
 </resources>

@@ -2,7 +2,10 @@ package com.example.jetmovieapp.screens.details
 
 import android.graphics.Paint
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -11,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,7 +22,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
+import coil.compose.rememberAsyncImagePainter
 import com.example.jetmovieapp.MyApp
+import com.example.jetmovieapp.model.Movie
 import com.example.jetmovieapp.model.getMovie
 import com.example.jetmovieapp.navigation.MovieNavigation
 
@@ -30,7 +37,12 @@ import com.example.jetmovieapp.navigation.MovieNavigation
 
 @Composable
 fun DetailsScreen(navController: NavController,
-                  movieData: String?){
+                  movieData: String?= "0"){
+
+    val movieDetails = getMovie()
+    val movieInfoFromId = movieDetails.single { item ->
+        item.id == movieData
+    }
 
     Scaffold(
         topBar = {
@@ -61,9 +73,8 @@ fun DetailsScreen(navController: NavController,
                     )
                 }
             }
-        }
-
-    ) {
+        })
+    {
 
         Surface(modifier = Modifier.fillMaxSize(),
             color = Color(0xFF374758)
@@ -74,33 +85,32 @@ fun DetailsScreen(navController: NavController,
                     topEnd = 10.dp )
             ) {
 
-                Column(
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
+                Column() {
 
-                    Text(
-                        text = movieData.toString(),
-                        style = MaterialTheme.typography.h6
-                    )
-
-                    val movieDetails = getMovie()
-
-
-                   val movieInfoFromId = movieDetails.single { item ->
-                       item.id == movieData
-                   }
-
-                    Text(text = movieInfoFromId.title,
-                        style = MaterialTheme.typography.h3
-                    )
+                    HorizontalImagesLazyRow(movieInfoFromId)
                 }
-
             }
+        }
+    }
+}
+
+@Composable
+private fun HorizontalImagesLazyRow(movieInfoFromId: Movie) {
+    LazyRow() {
+
+        items(items = movieInfoFromId.images) { image ->
+
+            Image(
+                painter = rememberAsyncImagePainter(model = image),
+                contentDescription = "movie image",
+                modifier = Modifier
+                    .size(240.dp)
+                    .padding(end = 10.dp),
+                contentScale = ContentScale.FillBounds
+            )
+
 
         }
-
-
     }
 }
 
@@ -110,5 +120,5 @@ fun DetailsScreen(navController: NavController,
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    DetailsScreen(rememberNavController(), "movie")
+    DetailsScreen(rememberNavController(),)
 }
