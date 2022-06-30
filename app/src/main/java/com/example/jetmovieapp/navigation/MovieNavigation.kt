@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.jetmovieapp.screens.homes.HomeScreen
 import com.example.jetmovieapp.screens.details.DetailsScreen
+import com.example.jetmovieapp.screens.imageDetails.ImageDetailsScreen
 
 // setting up our main navigation controller
 // for that we gon make a composable function first
@@ -39,7 +40,7 @@ fun MovieNavigation() {
         // we gotta put all the screens in their own composable function
 
         // passing data in the screens as an argument
-        // this composable function has an parameter that
+        // this composable function has a parameter that
         // accepts list of arguments and in it we can pass the name
         // and type of argument
 
@@ -48,7 +49,7 @@ fun MovieNavigation() {
 
         composable(MovieScreens.DetailsScreen.name+ "/{movie}"
         , arguments = listOf(navArgument(name = "movie"){type = NavType.StringType})
-        ) {navBackStackEntry ->
+        ) {
 
             // so we are putting the data as an argument but how do we get
             // access to or retrieve the data, well we gonna get it from
@@ -56,10 +57,27 @@ fun MovieNavigation() {
             // the data, then we can pass in inside our details screen as a
             // parameter
 
-                DetailsScreen(navController = navController
-                ,navBackStackEntry.arguments?.getString("movie")
+                DetailsScreen(navController = navController,
+                    it.arguments?.getString("movie")
                 )
         }
 
+        // image detail screen that takes the image Url and show it to the sure
+
+        composable(MovieScreens.ImageDetailsScreen.name+ "/{image}"
+            , arguments = listOf(navArgument(name = "image"){type = NavType.StringType})
+        ){navBackStackEntry ->
+
+            // so we are putting the data as an argument but how do we get
+            // access to or retrieve the data, well we gonna get it from
+            // the nav back stack entry which is lambda function containing
+            // the data, then we can pass in inside our details screen as a
+            // parameter
+
+            ImageDetailsScreen(navController = navController,
+                navBackStackEntry.arguments?.getString("image")
+                )
+
+        }
     }
 }

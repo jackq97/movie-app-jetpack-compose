@@ -17,7 +17,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.jetmovieapp.R
 import com.example.jetmovieapp.model.Movie
 import com.example.jetmovieapp.model.getMovie
@@ -41,7 +40,6 @@ fun HomeScreen(navController: NavController) {
                 Text(
                     modifier = Modifier.padding(start = 10.dp),
                     text = "Movies",
-                    color = colorResource(id = R.color.white),
                     fontSize = 22.sp
                 )
             }
@@ -90,7 +88,7 @@ fun HomeScreen(navController: NavController) {
                 // lazy column demo
                 // first starting with lazy column compose function
 
-                LazyColumn() {
+                LazyColumn {
 
                     // inside it we gonna have items that is equal to the movie list
                     // and it is gonna return it as the trailing lambda, so we can
@@ -127,5 +125,5 @@ fun HomeScreen(navController: NavController) {
 @Preview
 @Composable
 fun ShowPreview(){
-    HomeScreen(navController = rememberNavController())
+
 }

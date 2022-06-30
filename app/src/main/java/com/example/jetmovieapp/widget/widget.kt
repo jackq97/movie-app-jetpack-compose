@@ -1,6 +1,5 @@
 package com.example.jetmovieapp.widget
 
-import android.graphics.Paint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -13,21 +12,15 @@ import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.text.buildSpannedString
 import coil.compose.rememberAsyncImagePainter
 import com.example.jetmovieapp.R
 import com.example.jetmovieapp.model.Movie
@@ -57,7 +50,7 @@ fun MovieRow(
     // some constant values for our plot max and min lines
     // it will helps us expand the text
 
-    val minimizedMaxLines = 1
+    //val minimizedMaxLines = 1
 
     Card(
         modifier = Modifier

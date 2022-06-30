@@ -1,7 +1,5 @@
 package com.example.jetmovieapp.navigation
 
-import android.telecom.Call
-
 
 // it's like a directory home/documents/downloads
 
@@ -10,7 +8,8 @@ enum class MovieScreens {
     // enum class with our activities name objects
 
     HomeScreen,
-    DetailsScreen;
+    DetailsScreen,
+    ImageDetailsScreen;
 
 
     // companion object for static functions
@@ -30,6 +29,7 @@ enum class MovieScreens {
 
                 HomeScreen.name -> HomeScreen
                 DetailsScreen.name -> DetailsScreen
+                ImageDetailsScreen.name -> ImageDetailsScreen
 
                 // if it is empty we return home screen
                 null -> HomeScreen
