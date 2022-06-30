@@ -34,6 +34,7 @@ import java.nio.charset.StandardCharsets
 // the second parameter is data that we are passing from the
 // home screen
 
+
 @Preview
 @Composable
 fun DetailsScreen(navController: NavController = rememberNavController(),
@@ -118,7 +119,7 @@ fun DetailsScreen(navController: NavController = rememberNavController(),
                     ) {
 
                         Text(//modifier = Modifier.width(280.dp),
-                            modifier = Modifier.weight(4f),
+                            modifier = Modifier.weight(3f),
                             text = movieInfoFromId.title,
                             style = MaterialTheme.typography.h3,
                             color = Color.White
