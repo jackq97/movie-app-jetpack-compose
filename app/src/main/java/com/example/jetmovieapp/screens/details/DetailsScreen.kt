@@ -34,7 +34,6 @@ import java.nio.charset.StandardCharsets
 // the second parameter is data that we are passing from the
 // home screen
 
-
 @Preview
 @Composable
 fun DetailsScreen(navController: NavController = rememberNavController(),
